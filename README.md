@@ -26,14 +26,14 @@ const rollbar = require('rollbar-grouping')({
 
 ### Usage Example:
 
-  1)
+  1
   ```
   const eventId = rollbar.startEvent();
   rollbar.info('Some info message!').useEvent(eventId);
   rollbar.warn('Some warn message..').useEvent(eventId);
   rollbar.info('Last message').finishEvent(eventId);
   ```
-  2)
+  2
   ```
   const eventId = rollbar.startEvent();
   rollbar.info('Some info message!').useEvent(eventId);
@@ -43,10 +43,10 @@ const rollbar = require('rollbar-grouping')({
   ```
 
   // Rollbar Result (warn level (maximum detected)):
-  /*
+  ```
     Hello!
   
     Warn..
   
     Finish
-  */
+  ```
