@@ -8,6 +8,7 @@ const eventObj = {};
 const impacts = { info: 0, warn: 1, error: 2 };
 
 module.exports = config => {
+  config.eventTimeout = config.eventTimeout || 15000;
   config.moduleErrorLogging = config.moduleErrorLogging || true;
 
   const rollbar = new Rollbar(config.rollbar);
@@ -92,27 +93,3 @@ module.exports = config => {
     finishEvent: id => finishEvent(id)
   };
 };
-
-/* 
-  External Usage Examples:
-
-  1)
-  const eventId = rollbar.startEvent();
-  rollbar.info('Hello!').useEvent(eventId);
-  rollbar.warn('Warn..').useEvent(eventId);
-  rollbar.info('Finish').finishEvent(eventId);
-
-  2)
-  const eventId = rollbar.startEvent();
-  rollbar.info('Hello!').useEvent(eventId);
-  rollbar.warn('Warn..').useEvent(eventId);
-  rollbar.info('Finish').useEvent(eventId);
-  rollbar.finishEvent(eventId);
-
-  Rollbar Result (warn level (maximum detected)):
-  Hello!
-
-  Warn..
-
-  Finish
-*/
