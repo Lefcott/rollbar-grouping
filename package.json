@@ -1,0 +1,22 @@
+{
+  "name": "rollbar-grouping",
+  "version": "1.0.1",
+  "description": "Group multiple messages of one event",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "rollbar",
+    "rollbar grouping",
+    "rollbar log grouping",
+    "rollbar group",
+    "rollbar group logs",
+    "rollbar multiple logs"
+  ],
+  "author": "Leandro Cotti",
+  "license": "ISC",
+  "dependencies": {
+    "rollbar": "^2.15.0"
+  }
+}
