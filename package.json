@@ -18,5 +18,9 @@
   "license": "ISC",
   "dependencies": {
     "rollbar": "^2.15.0"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/lefcott19/rollbar-grouping/issues"
+  },
+  "homepage": "https://github.com/lefcott19/rollbar-grouping"
 }
