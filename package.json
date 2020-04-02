@@ -1,6 +1,6 @@
 {
   "name": "rollbar-grouping",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Group multiple messages of one event",
   "main": "index.js",
   "scripts": {

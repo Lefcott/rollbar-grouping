@@ -1,5 +1,6 @@
 # rollbar-grouping
 Group multiple messages of one event
+Feel free to open new issues [here](https://github.com/lefcott19/rollbar-grouping/issues)!
 
 
 ### Installation:
@@ -44,9 +45,9 @@ const rollbar = require('rollbar-grouping')({
 
   // Rollbar Result (warn level (maximum detected)):
   ```
-    Hello!
+    Some info message!
   
-    Warn..
+    Some warn message..
   
-    Finish
+    Last message
   ```
