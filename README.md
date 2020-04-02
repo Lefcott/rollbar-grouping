@@ -1,5 +1,6 @@
 # rollbar-grouping
 Group multiple messages of one event
+
 Feel free to open new issues [here](https://github.com/lefcott19/rollbar-grouping/issues)!
 
 
