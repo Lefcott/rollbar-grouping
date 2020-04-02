@@ -14,11 +14,16 @@ module.exports = config => {
   const rollbar = new Rollbar(config.rollbar);
 
   const finishEvent = id => {
-    if (eventObj[id] && eventObj[id].message) {
-      rollbar[eventObj[id].currLevel](eventObj[id].message);
+    if (eventObj[id]) {
+      if (eventObj[id].message) {
+        rollbar[eventObj[id].currLevel](eventObj[id].message);
+      }
+      clearTimeout(eventObj[id].timeoutId);
+      delete eventObj[id];
+      return true;
+    } else {
+      return false;
     }
-    clearTimeout(eventObj[id].timeoutId);
-    delete eventObj[id];
   };
   const logBase = level => (...messages) => {
     logId += 1;
@@ -33,6 +38,15 @@ module.exports = config => {
       delete logTimeouts[currLogId];
     }, 50);
     const dotFunctions = {
+      /** 
+       * Adds a message to an event
+       * 
+       * Returns true if the message was added
+       * 
+       * Returns false if the event id does not exist
+       * @param {Number} id - The sequential id of the event, obtained from .startEvent()
+       * @returns {Boolean}
+      */
       useEvent: id => {
         if (!eventObj[id]) {
           const errorToLog = `\n${new Error(`Rollbar event id ${id} does not exist!`).stack.split('\n').slice(0, 4).join('\n')}`;
@@ -50,6 +64,15 @@ module.exports = config => {
         }
         return true;
       },
+      /** 
+       * Finishes a previously started event by id
+       * 
+       * Returns true if the event exists and was deleted
+       * 
+       * Returns false if the event does not exist
+       * @param {Number} id - The sequential id of the event, obtained from .startEvent()
+       * @returns {Boolean}
+      */
       finishEvent: id => id // Its a reference for highlighting
     };
     dotFunctions.finishEvent = id => {
@@ -73,6 +96,10 @@ module.exports = config => {
     error: logBase('error', 'red'),
     warn: logBase('warn', 'yellow'),
     info: logBase('info', 'blue'),
+    /** 
+     * Starts an event and returns the id
+     * @returns {Number}
+    */
     startEvent: () => {
       eventId += 1;
       const currEventId = eventId;
@@ -90,6 +117,15 @@ module.exports = config => {
       }, timeout);
       return eventId;
     },
+    /** 
+     * Finishes a previously started event by id
+     * 
+     * Returns true if the event exists and was deleted
+     * 
+     * Returns false if the event does not exist
+     * @param {Number} id - The sequential id of the event, obtained from .startEvent()
+     * @returns {Boolean}
+    */
     finishEvent: id => finishEvent(id)
   };
 };
