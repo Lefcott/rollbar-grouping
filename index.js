@@ -35,8 +35,9 @@ module.exports = config => {
     const dotFunctions = {
       useEvent: id => {
         if (!eventObj[id]) {
-          config.moduleErrorLogging && console.error(`Rollbar event id ${id} does not exist!`);
-          rollbar.error(`Rollbar event id ${id} does not exist!`);
+          const errorToLog = `\n${new Error(`Rollbar event id ${id} does not exist!`).stack.split('\n').slice(0, 4).join('\n')}`;
+          config.moduleErrorLogging && console.error(errorToLog);
+          rollbar.error(errorToLog);
           return false;
         }
         clearTimeout(logTimeouts[currLogId]);
@@ -47,7 +48,6 @@ module.exports = config => {
         if (impacts[level] > impacts[eventObj[id].currLevel]) {
           eventObj[id].currLevel = level;
         }
-        finishEvent(id);
         return true;
       },
       finishEvent: id => id // Its a reference for highlighting
