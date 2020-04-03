@@ -5,7 +5,7 @@ let eventId = 0; // First will be 1
 let logId = 0; // First will be 1
 const logTimeouts = {};
 const eventObj = {};
-const impacts = { info: 0, warn: 1, error: 2 };
+const impacts = { log: 0, debug: 1, info: 2, warn: 3, error: 4, critical: 5 };
 
 module.exports = config => {
   config.eventTimeout = config.eventTimeout || 15000;
@@ -91,11 +91,21 @@ module.exports = config => {
     };
     return dotFunctions;
   };
+  /** @type {import('rollbar')} */
   return {
-    errorHandler: rollbar.errorHandler,
-    error: logBase('error', 'red'),
-    warn: logBase('warn', 'yellow'),
-    info: logBase('info', 'blue'),
+    ...rollbar,
+    /** Rollbar critical level! */
+    critical: logBase('critical'),
+    /** Rollbar error level */
+    error: logBase('error'),
+    /** Rollbar warn level */
+    warn: logBase('warn'),
+    /** Rollbar info level */
+    info: logBase('info'),
+    /** Rollbar debug level */
+    debug: logBase('debug'),
+    /** Rollbar log level */
+    log: logBase('log'),
     /** 
      * Starts an event and returns the id
      * @returns {Number}
@@ -105,7 +115,7 @@ module.exports = config => {
       const currEventId = eventId;
       eventObj[currEventId] = {
         message: '',
-        currLevel: 'info',
+        currLevel: 'log',
         finish: () => finishEvent(currEventId)
       };
       const timeout = config.eventTimeout;

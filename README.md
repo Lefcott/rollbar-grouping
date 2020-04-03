@@ -44,7 +44,7 @@ const rollbar = require('rollbar-grouping')({
   rollbar.finishEvent(eventId);
   ```
 
-  // Rollbar Result (warn level (maximum detected)):
+#### Rollbar Result (warn level (maximum detected)):
   ```
     Some info message!
   
