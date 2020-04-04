@@ -9,7 +9,7 @@ Feel free to open new issues [here](https://github.com/lefcott19/rollbar-groupin
 npm install --save rollbar-grouping
 ```
 
-### Initialization:
+### Initialization with all available options:
 ```js
 const rollbar = require('rollbar-grouping')({
   rollbar: {
@@ -21,8 +21,10 @@ const rollbar = require('rollbar-grouping')({
     itemsPerMinute: 500,
     maxItems: 500000
   },
-  eventTimeout: 10000, // Default to 15000 milliseconds
-  moduleErrorLogging: true // Default to false
+  mock: false, // true for simulating rollbar messages. Default to false
+  eventTimeout: 15000, // Time (in milliseconds) to wait for a .finishEvent() calling. Default to 15000
+  moduleErrorLogging: true // true for making console.error on unexpected error. Default to true
+  secondLogging: console.log // Function for logging if rollbar is not present. Default to console.log
 });
 ```
 

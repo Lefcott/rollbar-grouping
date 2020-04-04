@@ -8,21 +8,38 @@ const logTimeouts = {};
 const eventObj = {};
 const impacts = { log: 0, debug: 1, info: 2, warn: 3, error: 4, critical: 5 };
 /**
- * @param {object} rollbar - Rollbar configuration
- * @param {object} config - Defines the configuration
- * @param {Number} [config.eventTimeout=15000] - Time (in milliseconds) to wait for a .finishEvent() calling.
- * @param {Boolean} [config.moduleErrorLogging=true] - true for making console.error on unexpected error. Default to true
+ * @param {object} Config - Defines the configuration
+ * @param {object} [Config.rollbar] - Rollbar configuration
+ * @param {Boolean} [Config.mock=false] - true for simulating rollbar messages. Default to false
+ * @param {Number} [Config.eventTimeout=15000] - Time (in milliseconds) to wait for a .finishEvent() calling. Default to 15000
+ * @param {Boolean} [Config.moduleErrorLogging=true] - true for making console.error on unexpected error. Default to true
+ * @param {Function} [Config.secondLogging] - Function for logging if rollbar is not present. Default to console.log
  */
-module.exports = config => {
-  config.eventTimeout = config.eventTimeout || 15000;
-  config.moduleErrorLogging = config.moduleErrorLogging || true;
+module.exports = Config => {
+  const config = {
+    mock: false,
+    eventTimeout: 15000,
+    moduleErrorLogging: true,
+    secondLogging: console.log,
+    ...Config
+  }
+  let logToRollbar = !!config.rollbar && !config.mock;
 
-  const rollbar = new Rollbar(config.rollbar);
+  if (!config.mock && !config.rollbar) {
+    logToRollbar = false;
+    console.warn('RollbarGrouping: no rollbar configuration was provided. If you want to skip this warn set Config.mock to true');
+  }
+
+  const rollbar = config.rollbar && new Rollbar(config.rollbar) || null;
 
   const finishEvent = id => {
     if (eventObj[id]) {
       if (eventObj[id].message) {
-        rollbar[eventObj[id].currLevel](eventObj[id].message);
+        if (logToRollbar) {
+          rollbar[eventObj[id].currLevel](eventObj[id].message);
+        } else {
+          config.secondLogging(eventObj[id].message);
+        }
       }
       clearTimeout(eventObj[id].timeoutId);
       delete eventObj[id];
