@@ -3,10 +3,16 @@ const Rollbar = require('rollbar');
 
 let eventId = 0; // First will be 1
 let logId = 0; // First will be 1
+const libId = Symbol('RollbarGrouping');
 const logTimeouts = {};
 const eventObj = {};
 const impacts = { log: 0, debug: 1, info: 2, warn: 3, error: 4, critical: 5 };
-
+/**
+ * Rollbar Grouping
+ * @param {object} config - Defines the configuration
+ * @param {Number} [config.eventTimeout=15000] - Time (in milliseconds) to wait for a .finishEvent() calling.
+ * @param {Boolean} [config.moduleErrorLogging=true] - true for making console.error on unexpected error. Default to true
+ */
 module.exports = config => {
   config.eventTimeout = config.eventTimeout || 15000;
   config.moduleErrorLogging = config.moduleErrorLogging || true;
@@ -136,6 +142,16 @@ module.exports = config => {
      * @param {Number} id - The sequential id of the event, obtained from .startEvent()
      * @returns {Boolean}
     */
-    finishEvent: id => finishEvent(id)
+    finishEvent: id => finishEvent(id),
+    /**Id of this library.
+     * 
+     * It's util for comparing if an object is a rollbarGrouping object
+     */
+    libId,
+    /**
+     * Compares if an object is a rollbarGroupingObject using it's id
+     * @param {object} obj - Object to compare
+    */
+    isRollbarGroupingObject: obj => obj && obj.libId === libId || false
   };
 };

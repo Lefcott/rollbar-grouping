@@ -10,7 +10,7 @@ npm install --save rollbar-grouping
 ```
 
 ### Initialization:
-```
+```js
 const rollbar = require('rollbar-grouping')({
   rollbar: {
     accessToken: process.env.ROLLBAR_ACCESS_TOKEN,
@@ -29,14 +29,14 @@ const rollbar = require('rollbar-grouping')({
 ### Usage Example:
 
   1
-  ```
+  ```js
   const eventId = rollbar.startEvent();
   rollbar.info('Some info message!').useEvent(eventId);
   rollbar.warn('Some warn message..').useEvent(eventId);
   rollbar.info('Last message').finishEvent(eventId);
   ```
   2
-  ```
+  ```js
   const eventId = rollbar.startEvent();
   rollbar.info('Some info message!').useEvent(eventId);
   rollbar.warn('Some warn message..').useEvent(eventId);
