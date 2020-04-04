@@ -116,7 +116,8 @@ const lib = Config => {
   };
   /** @type {import('rollbar')} */
   return {
-    ...rollbar,
+    /** Rollbar error handler middlware */
+    errorHandler: rollbar.errorHandler,
     /** Rollbar critical level! */
     critical: logBase('critical'),
     /** Rollbar error level */
