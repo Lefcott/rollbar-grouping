@@ -15,7 +15,7 @@ const impacts = { log: 0, debug: 1, info: 2, warn: 3, error: 4, critical: 5 };
  * @param {Boolean} [Config.moduleErrorLogging=true] - true for making console.error on unexpected error. Default to true
  * @param {Function} [Config.secondLogging] - Function for logging if rollbar is not present. Default to console.log
  */
-module.exports = Config => {
+const lib = Config => {
   const config = {
     mock: false,
     eventTimeout: 15000,
@@ -164,11 +164,15 @@ module.exports = Config => {
      * 
      * It's util for comparing if an object is a rollbarGrouping object
      */
-    libId,
-    /**
-     * Compares if an object is a rollbarGroupingObject using it's id
-     * @param {object} obj - Object to compare
-    */
-    isRollbarGroupingObject: obj => obj && obj.libId === libId || false
+    libId
   };
 };
+
+/**
+ * Compares if an object is a rollbarGroupingObject using it's id
+ * @param {object} obj - Object to compare
+ * @param {Symbol} [obj.libId] - Id of rollbar-grouping, its defined
+*/
+lib.isRollbarGroupingObject = obj => obj && obj.libId === libId || false
+
+module.exports = lib;
