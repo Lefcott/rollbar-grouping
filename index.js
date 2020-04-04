@@ -8,7 +8,7 @@ const logTimeouts = {};
 const eventObj = {};
 const impacts = { log: 0, debug: 1, info: 2, warn: 3, error: 4, critical: 5 };
 /**
- * Rollbar Grouping
+ * @param {object} rollbar - Rollbar configuration
  * @param {object} config - Defines the configuration
  * @param {Number} [config.eventTimeout=15000] - Time (in milliseconds) to wait for a .finishEvent() calling.
  * @param {Boolean} [config.moduleErrorLogging=true] - true for making console.error on unexpected error. Default to true
