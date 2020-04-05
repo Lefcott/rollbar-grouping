@@ -1,6 +1,8 @@
 # rollbar-grouping
 Group multiple messages of one event
 
+[![NPM](https://nodei.co/npm/rollbar-grouping.png?downloads=true)](https://nodei.co/npm/rollbar-grouping/)
+
 Feel free to open new issues [here](https://github.com/lefcott19/rollbar-grouping/issues)!
 
 
