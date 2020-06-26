@@ -1,5 +1,6 @@
 /* eslint-disable global-require */
 const Rollbar = require('rollbar');
+require('json-circular-stringify');
 
 let eventId = 0; // First will be 1
 let logId = 0; // First will be 1

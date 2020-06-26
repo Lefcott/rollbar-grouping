@@ -1,6 +1,6 @@
 {
   "name": "rollbar-grouping",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "description": "Group multiple messages of one event",
   "main": "index.js",
   "scripts": {
@@ -37,7 +37,8 @@
   "author": "Leandro Cotti",
   "license": "ISC",
   "dependencies": {
-    "rollbar": "^2.15.0"
+    "json-circular-stringify": "^1.0.1",
+    "rollbar": "^2.17.0"
   },
   "bugs": {
     "url": "https://github.com/lefcott19/rollbar-grouping/issues"
